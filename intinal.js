@@ -405,6 +405,7 @@ function submitGets3(){
 }
 
 //mongo "mongodb+srv://cluster0.c58yb.mongodb.net/myFirstDatabase" --username Adim-Matheus;
+//mongodb+srv://Adim-Matheus:<password>@cluster0.c58yb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
 /*const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://Adim-Matheus:<password>@cluster0.c58yb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
@@ -414,73 +415,94 @@ client.connect(err => {
   // perform actions on the collection object
   client.close();
 });*/
-
 const mongodb = require('mongodb')
-const password = process.env.PASSWORD || "asdf";
+
+
+//const password = process.env.PASSWORD || "DPlrDV8OZ4KjINQi";
+const password = process.env['PASSWORD']="DPlrDV8OZ4KjINQi";
 console.log(password);
 
 const connectionString = `mongodb+srv://Adim-Matheus:${password}@cluster0.c58yb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-
+/* const connectionString = `mongodb+srv://Adim-Matheus:DPlrDV8OZ4KjINQi@cluster0.c58yb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+console.log("Entrou"); */
+ 
 const options = { 
   useNewUrlParser: true, 
   useUnifiedTopology: true };
 
   (async()=>{
     const client = await mongodb.MongoClient.connect(connectionString, options);
-    const db = client.db('myFistDatabase');
-    const soundtrack = db.collection('soundtrack');
-    console.log(soundtrack.find({}).toArray());
+    const db = client.db('myFirstDatabase');
+    const soundtrack = db.collection('musica');
+    console.log(await soundtrack.find({}).toArray());
 
-    app.get('/database',async function(req,res){
-      res.send( await soundtrack.find({}).toArray());
-    });
+/*     app.get('/database',
+        async function(req, res){
+        // res.send(mensagens);
+        res.send(await soundtrack.find({}).toArray());
+    }
+);
 
-    app.get('/database',
+app.get('/database/:id',
     async function(req, res){
         const id = req.params.id;
-        const Music = await soundtrack.findOne({
-          _id : mongodb.ObjectID(id)
-        });
+        const soundtrack = await soundtrack.findOne(
+            {_id : mongodb.ObjectID(id)}
+        );
         console.log(soundtrack);
-
-        if (!Music){
-            res.send("Não achado");
+        if (!soundtrack){
+            res.send("Musica não encontrada");
         } else {
-            res.send(Music);
+            res.send(soundtrack);
         }
     }
-)
+);
+
 app.post('/database', 
     async (req, res) => {
-        console.log(req.body.Music);
-        const Music = req.body.Music;
+        console.log(req.body);
+        const soundtrack = req.body;
+        
         delete soundtrack["_id"];
-        soundtrack.insertOne(Music);
-        res.send("Adicionado nova música")
+
+        soundtrack.insertOne(mensagem);        
+        res.send("criar uma mensagem.");
     }
-)
-app.put('/database/id',
+);
+
+app.put('/database/:id',
     async (req, res) => {
         const id = req.params.id;
-        const Music = req.body.Music;
+        const soundtrack = req.body;
+
         console.log(soundtrack);
+
         delete soundtrack["_id"];
-        const num_mensa = await soundtrack.countDocuments({_id : mongodb.ObjectID(id)});
-        if(num_mensa !== 1){
-          res.send("Não achado");
-          return;
+
+        const num_mensagens = await soundtrack.countDocuments({_id : mongodb.ObjectID(id)});
+
+        if (num_mensagens !== 1) {
+            res.send('Ocorreu um erro por conta do número de mensagens');
+            return;
         }
-        await soundtrack.updateOne({_id : mongodb.ObjectID(id)},{$set : soundtrack})
-        res.send("Nome da música corrigida com sucesso.")
+
+        await soundtrack.updateOne(
+            {_id : mongodb.ObjectID(id)},
+            {$set : mensagem}
+        );
+        
+        res.send("Mensagem atualizada com sucesso.")
     }
 )
+
 app.delete('/database/:id', 
     async (req, res) => {
         const id = req.params.id;
+        
         await soundtrack.deleteOne({_id : mongodb.ObjectID(id)});
 
-        res.send("Música removida da lista com sucesso");
+        res.send("Mensagem removida com sucesso");
     }
-);
-    });
-  
+); */
+
+})();
