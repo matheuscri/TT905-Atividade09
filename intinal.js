@@ -471,20 +471,19 @@ const options = {
     async function(req, res){
     // res.send(mensagens);
     res.send(await soundtrack.find({}).toArray());
-}
-);
+        }
+    );
 
  app.get('/database/:id',
     async function(req, res){
         const id = req.params.id;
-        const soundtrack = await mensagens.findOne(
-            {_id : mongodb.ObjectID(id)}
-        );
-        console.log(soundtrack);
-        if (!soundtrack){
+        const chorao = await soundtrack.findOne(
+            {_id : mongodb.ObjectID(id)})
+        console.log(chorao);
+        if (!chorao){
             res.send("Dado não encontrada");
         } else {
-            res.send(soundtrack);
+            res.send(chorao);
         }
     }
 );
@@ -492,11 +491,11 @@ const options = {
 app.post('/database', 
     async (req, res) => {
         console.log(req.body);
-        const soundtrack = req.body;
+        const chorao = req.body;
         
-        delete soundtrack["_id"];
+        delete chorao["_id"];
 
-        soundtrack.insertOne(soundtrack);        
+        soundtrack.insertOne(chorao);        
         res.send("criando um dado.");
     }
 );
@@ -504,11 +503,11 @@ app.post('/database',
 app.put('/database/:id',
     async (req, res) => {
         const id = req.params.id;
-        const soundtrack = req.body;
+        const chorao = req.body;
 
-        console.log(soundtrack);
+        console.log(chorao);
 
-        delete soundtrack["_id"];
+        delete chorao["_id"];
 
         const num_mensagens = await soundtrack.countDocuments({_id : mongodb.ObjectID(id)});
 
@@ -519,7 +518,7 @@ app.put('/database/:id',
 
         await soundtrack.updateOne(
             {_id : mongodb.ObjectID(id)},
-            {$set : soundtrack}
+            {$set : chorao}
         );
         
         res.send("Dado atualizada com sucesso.")
