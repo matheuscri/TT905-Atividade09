@@ -1,408 +1,439 @@
-// link geral do programa
-let url = "https://tt905-prog-web-matheus-cri.herokuapp.com/"
+console.log("Rodando");
+const express = require("express");
+const app = express();
+app.use(express.json());
 
-/********************************************************************** 
-*******************************Cantores********************************
-************************************************************************/
 
-//let url = "https://tt905-prog-web-matheus-cri.herokuapp.com/cantores/"
+// Permissões
+var cors = require('cors');
+app.use(cors());
 
-async function callFetchWithGet(){
-    let headers = new Headers();
-    const options = {
-        method : 'GET',
-        mode: 'cors',
-        headers: headers
+// Porta que eu estou ouvindo
+app.listen(process.env.PORT || 3001);
+
+app.get('/', 
+    function (req, res){    
+        res.send("Página Inicial ");
+        //<br/>Para outras paginas digite '/' e o seguinte nome:\
+        //soundtrackwaste\/cantores");
     }
-    const output = document.getElementById("json");
-    const response = await fetch(`${url}${'cantores/'}`, options);
+);
 
-    if (response.status >= 200 && response.status <= 300){
-        console.log("Funcionou/GET");
-        output.innerHTML = await response.text();
-    } else {
-        console.log("Deu errado");
-    }
+// ===================================================================================
+// ======================== Vetor de objetos Soundtrack ==============================
+
+const soundtrack = {"Tony_Hawk_American_Wasteland":[
+    "7 Seconds - We're Gonna Fight","Alkaline Trio - Wash Away (Beneath the Shadows) (T.S.O.L.)",
+    "Bad Religion - We're Only Gonna Die","Black Flag - Rise Above","Circle Jerks - Wild in the Streets",
+    "Dead Kennedys - California Über Alles","Emanuel - Search & Destroy (The Stooges)",
+    "Fall Out Boy - Start Today (Gorilla Biscuits)","From Autumn To Ashes - Let's Have a War (Fear)",
+    "Green Day - Holiday","My Chemical Romance - Astro Zombies (The Misfits)",
+    "Rise Against - Fix Me (Black Flag)","Senses Fail - Institutionalized (Suicidal Tendencies)",
+    "Taking Back Sunday - Suburban Home / I Like Food (Descendents)","The God Awfuls - Watch It Fall",
+    "The Network - Teenagers From Mars (The Misfits)","Thrice - Seeing Red / Screaming at a Wall (Minor Threat)",
+    "An Endless Sporadic - Sun of Pearl","Frank Black - Los Angeles","Nassim - Rawhide","The Faint - I Disappear",
+    "Thursday - Ever Fallen In Love (The Buzzcocks)","Public Enemy feat. Ice Cube and Big Daddy Kane - Burn Hollywood Burn"
+   ],
+    "Madden_NFL_10": ["2Pac- Can’t See Me","Airbourne- Heads are Gonna Roll",
+        "Alice In Chains- Them Bones","B.oB.- Created A Monster",
+        "Bang Camero- Revolution","Beastie Boys- Sabotage",
+        "Black Sabath- Paraniod","Cypress Hill- Get ‘Em Up",
+        "Helmet- Unsung","Iron Maiden- Aces High",
+        "Judas Priest- Painkiller","Kid Rock- I Am The Bullgod",
+        "Killswitch Engage- Reckoning","Korn- Blind",
+        "Mastodon- Divinations","Nas Feat. Puff Daddy- Hate Me Now",
+        "Nirvana- Breed","Pantera- Walk",
+        "Public Enemy- Shut Em Down","Rage Against The Machine- Guerilla Radio",
+        "Set Your Goals- Gaia Bleeds (Make Way For Man)","Slipknot- Duality",
+        "System Of A Down- Sugar","The Vanity Plan- Before I Die",
+        "Young Dre The Truth- Cheah Beah"],
+
+        "Guitar_hero" : ["I Love Rock & Roll - Joan Jett & the Blackhearts",
+        "I Wanna Be Sedated - The Ramones",
+        "Thunder Kiss 65 - White Zombie",
+        "Smoke On The Water - Deep Purple",
+        "Infected - Bad Religion",
+        "Iron Man - Black Sabbath",
+        "More Than A Feeling - Boston",
+        "You've Got Another Thing Comin' - Judas Priest",
+        "Take Me Out - Franz Ferdinand",
+        "Sharp Dressed Man - ZZ Top"]
+        
 }
 
-async function callFetchWithPost(cantor){
-    const options = {
-        method : 'POST',
-        mode: 'cors',
-        headers: {
-            'Accept' : 'application/json',
-            'content-type' : 'application/json'
-        },
-        body :JSON.stringify({
-            'Cantor' : cantor
-        })
-    }
-    //await fetch(url, options);
-    await fetch(`${url}${'cantores/'}`,options);
-}
 
-async function callFetchWithPut(id, novaMensagem){
-    const options = {
-        method : 'PUT',
-        mode: 'cors',
-        headers: {
-            'Accept' : 'application/json',
-            'content-type' : 'application/json'            
-        }, 
-        body :JSON.stringify({
-            'Cantor' : novaMensagem
-        })
+app.get('/soundtrack',
+function (req, res){   
+    res.send(soundtrack);
     }
-    await fetch(`${url}${'cantores/'}${id}`, options);
-}
+)
+app.get('/soundtrack/Tony_Hawk_American_Wasteland',
+function (req, res){   
+    res.send(soundtrack.Tony_Hawk_American_Wasteland);
+    }
+)
+app.get('/soundtrack/Madden_NFL_10',
+function (req, res){   
+    res.send(soundtrack.Madden_NFL_10);
+    }
+)
+    
+app.get('/soundtrack/Guitar_Hero',
+function (req, res){   
+    res.send(soundtrack.Guitar_hero);
+    }
+)
+app.get('/soundtrack/Tony_Hawk_American_Wasteland/:id',
+    function(req, res){
+        const id = req.params.id - 1;
+        const Music = soundtrack.Tony_Hawk_American_Wasteland[id];
 
-async function callFetchWithDelete(id){
-    const options = {
-        method : 'DELETE',
-        mode: 'cors',
-        headers: {
-            'Accept' : 'application/json',
-            'content-type' : 'application/json' 
+        if (!Music){
+            res.send("A posição da música do jogo não foi encontrado, verifique se esse existe na lista");
+        } else {
+            res.send(Music);
         }
     }
-   // await fetch(`${url}${id}`, options);
-   await fetch(`${url}${'cantores/'}${id}`, options);
-}
+)
 
-/*
-    Formulários
-*/
+app.get('/soundtrack/Madden_NFL_10/:id',
+    function(req, res){
+        const id = req.params.id - 1;
+        const Music = soundtrack.Madden_NFL_10[id];
 
-function submitPost(){
-    console.log("entrei na função");
-    
-    const form = document.forms['postForm'];    
-    const mensagem = form["mensagem"].value;
-    callFetchWithPost(mensagem);
-    return false; // Evitar o reload da tela.
-}
-
-function submitPut(){
-    const form = document.forms['putForm'];  
-    const id = form["id"].value;  
-    const mensagem = form["mensagem"].value;
-    callFetchWithPut(id, mensagem);
-    return false; // Evitar o reload da tela.
-}
-
-function submitDelete(){
-    const form = document.forms['deleteForm'];  
-    const id = form["id"].value;  
-    callFetchWithDelete(id);
-    return false; // Evitar o reload da tela.
-}
-/********************************************************************** 
-*******************Soudtrack: Tony Hawk********************************
-************************************************************************/
-
-//let url = "https://tt905-prog-web-matheus-cri.herokuapp.com/soundtrack/Tony_Hawk_American_Wasteland/"
-
-
-async function callFetchWithGets1(){
-    let headers = new Headers();
-    const options = {
-        method : 'GET',
-        mode: 'cors',
-        headers: headers
-    }
-    const output = document.getElementById("json1");
-    const response = await fetch(`${url}${'soundtrack/Tony_Hawk_American_Wasteland/'}`, options);
-
-    if (response.status >= 200 && response.status <= 300){
-        console.log("Funcionou/GET");
-        output.innerHTML = await response.text();
-    } else {
-        console.log("Deu errado");
-    }
-}
-
-async function callFetchWithPosts1(musica){
-    const options = {
-        method : 'POST',
-        mode: 'cors',
-        headers: { 
-            'Accept' : 'application/json',
-            'content-type' : 'application/json'
-        },
-        body :JSON.stringify({
-            'Music' : musica
-        })
-    }
-    //await fetch(url, options);
-    await fetch(`${url}${'soundtrack/Tony_Hawk_American_Wasteland/'}`, options);
-}
-
-async function callFetchWithPuts1(id, novaMensagem){
-    const options = {
-        method : 'PUT',
-        mode: 'cors',
-        headers: {
-            'Accept' : 'application/json',
-            'content-type' : 'application/json'            
-        }, 
-        body :JSON.stringify({
-            'Music' : novaMensagem
-        })
-    }
-    //await fetch(`${url}${id}`, options);
-    await fetch(`${url}${'soundtrack/Tony_Hawk_American_Wasteland/'}${id}`, options);
-}
-
-async function callFetchWithDeletes1(id){
-    const options = {
-        method : 'DELETE',
-        mode: 'cors',
-        headers: {
-            'Accept' : 'application/json',
-            'content-type' : 'application/json' 
+        if (!Music){
+            res.send("A posição da música do jogo não foi encontrado, verifique se esse existe na lista");
+        } else {
+            res.send(Music);
         }
     }
-    //await fetch(`${url}${id}`, options);
-    await fetch(`${url}${'soundtrack/Tony_Hawk_American_Wasteland/'}${id}`, options);
-}
+)
 
+app.get('/soundtrack/Guitar_Hero/:id',
+    function(req, res){
+        const id = req.params.id - 1;
+        const Music = soundtrack.Guitar_hero[id];
 
-/*
-    Formulários
-*/
-
-function submitPosts1(){
-    console.log("entrei na função");
-    
-    const form = document.forms['postForms1'];    
-    const mensagem = form["mensagem"].value;
-    callFetchWithPosts1(mensagem);
-    return false; // Evitar o reload da tela.
-}
-
-function submitPuts1(){
-    const form = document.forms['putForms1'];  
-    const id = form["id"].value;  
-    const mensagem = form["mensagem"].value;
-    callFetchWithPuts1(id, mensagem);
-    return false; // Evitar o reload da tela.
-}
-
-function submitDeletes1(){
-    const form = document.forms['deleteForms1'];  
-    const id = form["id"].value;  
-    callFetchWithDeletes1(id);
-    return false; // Evitar o reload da tela.
-}
-/********************************************************************** 
-*******************Soudtrack: Madden 10********************************
-************************************************************************/
-
-//let url = "https://tt905-prog-web-matheus-cri.herokuapp.com/soundtrack/Madden_NFL_10/"
-
-async function callFetchWithGets2(){
-    let headers = new Headers();
-    const options = {
-        method : 'GET',
-        mode: 'cors',
-        headers: headers
-    }
-    const output = document.getElementById("json2");
-    const response = await fetch(`${url}${'soundtrack/Madden_NFL_10/'}`, options);
-
-    if (response.status >= 200 && response.status <= 300){
-        console.log("Funcionou/GET");
-        output.innerHTML = await response.text();
-    } else {
-        console.log("Deu errado");
-    }
-}
-
-async function callFetchWithPosts2(musica){
-    const options = {
-        method : 'POST',
-        mode: 'cors',
-        headers: { //entender isso
-            'Accept' : 'application/json',
-            'content-type' : 'application/json'
-        },
-        body :JSON.stringify({
-            'Music' : musica
-        })//até isso
-    }
-    //await fetch(url, options);
-    await fetch(`${url}${'soundtrack/Madden_NFL_10/'}`, options);
-}
-
-async function callFetchWithPuts2(id, novaMensagem){
-    const options = {
-        method : 'PUT',
-        mode: 'cors',
-        headers: {
-            'Accept' : 'application/json',
-            'content-type' : 'application/json'            
-        }, 
-        body :JSON.stringify({
-            'Music' : novaMensagem
-        })
-    }
-    //await fetch(`${url}${id}`, options);
-    await fetch(`${url}${'soundtrack/Madden_NFL_10/'}${id}`, options);
-}
-
-async function callFetchWithDeletes2(id){
-    const options = {
-        method : 'DELETE',
-        mode: 'cors',
-        headers: {
-            'Accept' : 'application/json',
-            'content-type' : 'application/json' 
+        if (!Music){
+            res.send("A posição da música do jogo não foi encontrado, verifique se esse existe na lista");
+        } else {
+            res.send(Music);
         }
     }
-    //await fetch(`${url}${id}`, options);
-    await fetch(`${url}${'soundtrack/Madden_NFL_10/'}${id}`, options);
-}
+)
 
-/*
-    Formulários
-*/
-
-function submitPosts2(){
-    console.log("entrei na função");
-    
-    const form = document.forms['postForms2'];    
-    const mensagem = form["mensagem"].value;
-    callFetchWithPosts2(mensagem);
-    return false; // Evitar o reload da tela.
-}
-
-function submitPuts2(){
-    const form = document.forms['putForms2'];  
-    const id = form["id"].value;  
-    const mensagem = form["mensagem"].value;
-    callFetchWithPuts2(id, mensagem);
-    return false; // Evitar o reload da tela.
-}
-
-function submitDeletes2(){
-    const form = document.forms['deleteForms2'];  
-    const id = form["id"].value;  
-    callFetchWithDeletes2(id);
-    return false; // Evitar o reload da tela.
-}
-
-/********************************************************************** 
-*******************Soudtrack: Guitar Hero********************************
-************************************************************************/
-
-//let url = "https://tt905-prog-web-matheus-cri.herokuapp.com/soundtrack/Guitar_hero/"
-
-async function callFetchWithGets3(){
-    let headers = new Headers();
-    const options = {
-        method : 'GET',
-        mode: 'cors',
-        headers: headers
+app.post('/soundtrack/Tony_Hawk_American_Wasteland', 
+    (req, res) => {
+        console.log(req.body.Music);
+        const Music = req.body.Music;
+        soundtrack.Tony_Hawk_American_Wasteland.push(Music);
+        res.send("Adicionado nova música")
     }
-    const output = document.getElementById("json3");
-    const response =  await fetch(`${url}${'soundtrack/Guitar_hero/'}`, options);
-
-    if (response.status >= 200 && response.status <= 300){
-        console.log("Funcionou/GET");
-        output.innerHTML = await response.text();
-    } else {
-        console.log("Deu errado");
+);
+//Get usar JSON {"Music": "o que queser"}
+app.post('/soundtrack/Madden_NFL_10', 
+    (req, res) => {
+        console.log(req.body.Music);
+        const Music = req.body.Music;
+        soundtrack.Madden_NFL_10.push(Music);
+        res.send("Adicionado nova música")
     }
-}
-
-async function callFetchWithPosts3(musica){
-    const options = {
-        method : 'POST',
-        mode: 'cors',
-        headers: { //entender isso
-            'Accept' : 'application/json',
-            'content-type' : 'application/json'
-        },
-        body :JSON.stringify({
-            'Music' : musica
-        })//até isso
+);
+//Get usar JSON {"Music": "o que queser"}
+app.post('/soundtrack/Guitar_Hero/', 
+    (req, res) => {
+        console.log(req.body.Music);
+        const Music = req.body.Music;
+        soundtrack.Guitar_hero.push(Music);
+        res.send("Adicionado nova música")
     }
-    //await fetch(url, options);
-    await fetch(`${url}${'soundtrack/Guitar_hero/'}`, options);
-}
-
-async function callFetchWithPuts3(id, novaMensagem){
-    const options = {
-        method : 'PUT',
-        mode: 'cors',
-        headers: {
-            'Accept' : 'application/json',
-            'content-type' : 'application/json'            
-        }, 
-        body :JSON.stringify({
-            'Music' : novaMensagem
-        })
+);
+//Get usar JSON {"Music": "o que queser"}
+app.put('/soundtrack/Tony_Hawk_American_Wasteland/:id',
+    (req, res) => {
+        const id = req.params.id - 1;
+        const Music = req.body.Music;
+        soundtrack.Tony_Hawk_American_Wasteland[id] = Music;        
+        res.send("Nome da música corrigida com sucesso.")
     }
-    //await fetch(`${url}${id}`, options);
-    await fetch(`${url}${'soundtrack/Guitar_hero/'}${id}`, options);
-}
+)
+app.put('/soundtrack/Madden_NFL_10/:id',
+    (req, res) => {
+        const id = req.params.id - 1;
+        const Music = req.body.Music;
+        soundtrack.Madden_NFL_10[id] = Music;        
+        res.send("Nome da música corrigida com sucesso.")
+    }
+)
+app.put('/soundtrack/Guitar_Hero/:id',
+    (req, res) => {
+        const id = req.params.id - 1;
+        const Music = req.body.Music;
+        soundtrack.Guitar_hero[id] = Music;        
+        res.send("Nome da música corrigida com sucesso.")
+    }
+)
+app.delete('/soundtrack/Tony_Hawk_American_Wasteland/:id', 
+    (req, res) => {
+        const id = req.params.id - 1;
+        delete soundtrack.Tony_Hawk_American_Wasteland[id];
 
-async function callFetchWithDeletes3(id){
-    const options = {
-        method : 'DELETE',
-        mode: 'cors',
-        headers: {
-            'Accept' : 'application/json',
-            'content-type' : 'application/json' 
+        res.send("Música removida da lista com sucesso");
+    }
+);
+app.delete('/soundtrack/Madden_NFL_10/:id', 
+    (req, res) => {
+        const id = req.params.id - 1;
+        delete soundtrack.Madden_NFL_10[id];
+
+        res.send("Música removida da lista com sucesso");
+    }
+);
+app.delete('/soundtrack/Guitar_Hero/:id', 
+    (req, res) => {
+        const id = req.params.id - 1;
+        delete soundtrack.Guitar_hero[id];
+
+        res.send("Música removida da lista com sucesso");
+    }
+);
+
+
+// ==================================================================================
+// ========================== Vetor de Strings Cantores =============================
+
+const cantores = [
+    "Hot Chilli Peppers","Chorão","Charlie Brown Jr","Alexandre Magno Abrão","Rafa Moreira",
+    "Ximbinha", "Supla","Guitarra Humana","Péricles","Dilma Roussef","Cleiton Rasta Dj","Alcides","Latino",
+    "Mc Catra","Mc Carlos Funk Sumaré","Pabllo Vitar"
+];
+
+app.get('/cantores',
+    function(req, res){
+        // res.send(mensagens);
+        //res.send("Cantores Aleatórios")
+        res.send(cantores.filter(Boolean));
+    }
+);
+
+app.get('/cantores/:id',
+    function(req, res){
+        const id = req.params.id - 1;
+        const Cantor = cantores[id];
+
+        if (!Cantor){
+            res.send("Cantor não encontrado, verifique se esse existe na lista");
+        } else {
+            res.send(Cantor);
         }
     }
-    //await fetch(`${url}${id}`, options);
-    await fetch(`${url}${'soundtrack/Guitar_hero/'}${id}`, options);
-}
-/*
-    Formulários
-*/
+)
 
-function submitPosts3(){
-    console.log("entrei na função");
+app.post('/cantores', 
+    (req, res) => {
+        console.log(req.body.Cantor);
+        const Cantor = req.body.Cantor;
+        cantores.push(Cantor);
+        res.send("Novo cantor.")
+    }
+); // Ao usar post no JSON usar const Cantor não o vetor "cantores"
+
+app.put('/cantores/:id',
+    (req, res) => {
+        const id = req.params.id - 1;
+        const Cantor = req.body.Cantor;
+        cantores[id] = Cantor;        
+        res.send("Nome do cantor corrigido com sucesso.")
+    }
+)
+
+app.delete('/cantores/:id', 
+    (req, res) => {
+        const id = req.params.id - 1;
+        delete cantores[id];
+
+        res.send("Cantor removido do corração com sucesso");
+    }
+);
+
+// =========================================================================================
+// ========================== Vetor de objetos Caracteristicas =============================
+
+
+
+app.get('/soundtrack/Tony_Hawk_American_Wasteland',
+function (req, res){   
+    res.send(soundtrack.Tony_Hawk_American_Wasteland);
+    }
+)
+app.get('/soundtrack/Madden_NFL_10',
+function (req, res){   
+    res.send(soundtrack.Madden_NFL_10);
+    }
+)
     
-    const form = document.forms['postForms3'];    
-    const mensagem = form["mensagem"].value;
-    callFetchWithPosts3(mensagem);
-    return false; // Evitar o reload da tela.
+app.get('/soundtrack/Guitar_Hero',
+function (req, res){   
+    res.send(soundtrack.Guitar_hero);
+    }
+)
+
+
+app.get('/soundtrack/Tony_Hawk_American_Wasteland/:id',
+    function(req, res){
+        const id = req.params.id - 1;
+        const Music = soundtrack.Tony_Hawk_American_Wasteland[id];
+
+        if (!Music){
+            res.send("A posição da música do jogo não foi encontrado, verifique se esse existe na lista");
+        } else {
+            res.send(Music);
+        }
+    }
+);
+
+app.get('/soundtrack/Madden_NFL_10/:id',
+    function(req, res){
+        const id = req.params.id - 1;
+        const Music = soundtrack.Madden_NFL_10[id];
+
+        if (!Music){
+            res.send("A posição da música do jogo não foi encontrado, verifique se esse existe na lista");
+        } else {
+            res.send(Music);
+        }
+    }
+)
+
+app.get('/soundtrack/Guitar_Hero/:id',
+    function(req, res){
+        const id = req.params.id - 1;
+        const Music = soundtrack.Guitar_hero[id];
+
+        if (!Music){
+            res.send("A posição da música do jogo não foi encontrado, verifique se esse existe na lista");
+        } else {
+            res.send(Music);
+        }
+    }
+)
+
+app.post('/soundtrack/Tony_Hawk_American_Wasteland', 
+    (req, res) => {
+        console.log(req.body.Music);
+        const Music = req.body.Music;
+        soundtrack.Tony_Hawk_American_Wasteland.push(Music);
+        res.send("Adicionado nova música")
+    }
+);
+//Get usar JSON {"Music": "o que queser"}
+app.post('/soundtrack/Madden_NFL_10', 
+    (req, res) => {
+        console.log(req.body.Music);
+        const Music = req.body.Music;
+        soundtrack.Madden_NFL_10.push(Music);
+        res.send("Adicionado nova música")
+    }
+);
+//Get usar JSON {"Music": "o que queser"}
+app.post('/soundtrack/Guitar_Hero/', 
+    (req, res) => {
+        console.log(req.body.Music);
+        const Music = req.body.Music;
+        soundtrack.Guitar_hero.push(Music);
+        res.send("Adicionado nova música")
+    }
+);
+//Get usar JSON {"Music": "o que queser"}
+app.put('/soundtrack/Tony_Hawk_American_Wasteland/:id',
+    (req, res) => {
+        const id = req.params.id - 1;
+        const Music = req.body.Music;
+        soundtrack.Tony_Hawk_American_Wasteland[id] = Music;        
+        res.send("Nome da música corrigida com sucesso.")
+    }
+)
+app.put('/soundtrack/Madden_NFL_10/:id',
+    (req, res) => {
+        const id = req.params.id - 1;
+        const Music = req.body.Music;
+        soundtrack.Madden_NFL_10[id] = Music;        
+        res.send("Nome da música corrigida com sucesso.")
+    }
+)
+app.put('/soundtrack/Guitar_Hero/:id',
+    (req, res) => {
+        const id = req.params.id - 1;
+        const Music = req.body.Music;
+        soundtrack.Guitar_hero[id] = Music;        
+        res.send("Nome da música corrigida com sucesso.")
+    }
+)
+app.delete('/soundtrack/Tony_Hawk_American_Wasteland/:id', 
+    (req, res) => {
+        const id = req.params.id - 1;
+        delete soundtrack.Tony_Hawk_American_Wasteland[id];
+
+        res.send("Música removida da lista com sucesso");
+    }
+);
+app.delete('/soundtrack/Madden_NFL_10/:id', 
+    (req, res) => {
+        const id = req.params.id - 1;
+        delete soundtrack.Madden_NFL_10[id];
+
+        res.send("Música removida da lista com sucesso");
+    }
+);
+app.delete('/soundtrack/Guitar_Hero/:id', 
+    (req, res) => {
+        const id = req.params.id - 1;
+        delete soundtrack.Guitar_hero[id];
+
+        res.send("Música removida da lista com sucesso");
+    }
+);
+
+
+// ===================== Novo String Funções =====================
+
+const algo = { "Meu Novo Mundo":{'Artista':"Chorão",'Gênero':"Rock Nacional"},
+ "Help":{'Artista':"Borgore",'Gênero':"Eletronica"},
+  "GNAT":{'Artista':"Eminem", "Gênero":"Hip-Hop"},
+  "Carioca Girls":{'Artista':"Max", "Gênero":"2012"},
+  "SAD!":{'Artista':"XXXTentacion", "Gênero":"Suicide"},
+  "Crab Rave":{'Artista':"Noisestorm", "Gênero":"Eletronica"},
 }
 
-function submitPuts3(){
-    const form = document.forms['putForms3'];  
-    const id = form["id"].value;  
-    const mensagem = form["mensagem"].value;
-    callFetchWithPuts3(id, mensagem);
-    return false; // Evitar o reload da tela.
-}
+app.get('/algo',
+function (req, res){   
+    res.send(algo);
+    }
+)
 
-function submitDeletes3(){
-    const form = document.forms['deleteForms3'];  
-    const id = form["id"].value;  
-    callFetchWithDeletes3(id);
-    return false; // Evitar o reload da tela.
-}
+app.get('/algo/help',
+function (req, res){   
+    res.send(algo.Help);
+    }
+)
 
-function submitGet(){
-    callFetchWithGet();
-    return false;
-}
-function submitGets1(){
-    callFetchWithGets1();
-    return false;
-}
-function submitGets2(){
-    callFetchWithGets2();
-    return false;
-}
-function submitGets3(){
-    callFetchWithGets3();
-    return false;
-}
+app.get('/algo/help/artista',
+function (req, res){   
+    res.send(algo.Help.Artista);
+    }
+)
+
+app.get('/algo/help/:id',
+    function(req, res){
+        const id = req.params.id - 1;
+        const Music = algo.Help[id];
+
+        if (!Music){
+            res.send("A posição da música do jogo não foi encontrado, verifique se esse existe na lista");
+        } else {
+            res.send(Music);
+        }
+    })
 
 //mongo "mongodb+srv://cluster0.c58yb.mongodb.net/myFirstDatabase" --username Adim-Matheus;
 //mongodb+srv://Adim-Matheus:<password>@cluster0.c58yb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
@@ -436,22 +467,22 @@ const options = {
     const soundtrack = db.collection('musica');
     console.log(await soundtrack.find({}).toArray());
 
-/*     app.get('/database',
-        async function(req, res){
-        // res.send(mensagens);
-        res.send(await soundtrack.find({}).toArray());
-    }
+    app.get('/database',
+    async function(req, res){
+    // res.send(mensagens);
+    res.send(await soundtrack.find({}).toArray());
+}
 );
 
-app.get('/database/:id',
+ app.get('/database/:id',
     async function(req, res){
         const id = req.params.id;
-        const soundtrack = await soundtrack.findOne(
+        const soundtrack = await mensagens.findOne(
             {_id : mongodb.ObjectID(id)}
         );
         console.log(soundtrack);
         if (!soundtrack){
-            res.send("Musica não encontrada");
+            res.send("Dado não encontrada");
         } else {
             res.send(soundtrack);
         }
@@ -465,8 +496,8 @@ app.post('/database',
         
         delete soundtrack["_id"];
 
-        soundtrack.insertOne(mensagem);        
-        res.send("criar uma mensagem.");
+        soundtrack.insertOne(soundtrack);        
+        res.send("criando um dado.");
     }
 );
 
@@ -488,10 +519,10 @@ app.put('/database/:id',
 
         await soundtrack.updateOne(
             {_id : mongodb.ObjectID(id)},
-            {$set : mensagem}
+            {$set : soundtrack}
         );
         
-        res.send("Mensagem atualizada com sucesso.")
+        res.send("Dado atualizada com sucesso.")
     }
 )
 
@@ -501,8 +532,8 @@ app.delete('/database/:id',
         
         await soundtrack.deleteOne({_id : mongodb.ObjectID(id)});
 
-        res.send("Mensagem removida com sucesso");
+        res.send("Musica removida com sucesso");
     }
-); */
+);
 
 })();
