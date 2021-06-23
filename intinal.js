@@ -450,11 +450,11 @@ const mongodb = require('mongodb')
 
 
 //const password = process.env.PASSWORD || "DPlrDV8OZ4KjINQi";
-const password = process.env['PASSWORD']="DPlrDV8OZ4KjINQi";
-console.log(password);
+//const password = process.env['PASSWORD']="DPlrDV8OZ4KjINQi";
+//console.log(password);
 
-const connectionString = `mongodb+srv://Adim-Matheus:${password}@cluster0.c58yb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-// const connectionString = `mongodb+srv://Adim-Matheus:DPlrDV8OZ4KjINQi@cluster0.c58yb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+//const connectionString = `mongodb+srv://Adim-Matheus:${password}@cluster0.c58yb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+ const connectionString = `mongodb+srv://Adim-Matheus:DPlrDV8OZ4KjINQi@cluster0.c58yb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 console.log(connectionString); 
 // mongodb+srv://Adim-Matheus:<password>@cluster0.c58yb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority 
 const options = { 
