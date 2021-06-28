@@ -403,3 +403,103 @@ function submitGets3(){
     callFetchWithGets3();
     return false;
 }
+
+/********************************************************************** 
+************************MongoDB:Musicas********************************
+************************************************************************/
+
+
+async function callFetchWithGets4(){
+    let headers = new Headers();
+    const options = {
+        method : 'GET',
+        mode: 'cors',
+        headers: headers
+    }
+    const output = document.getElementById("json4");
+    const response =  await fetch(`${url}${'database'}`, options);
+
+    if (response.status >= 200 && response.status <= 300){
+        console.log("Funcionou/GET");
+        output.innerHTML = await response.text();
+    } else {
+        console.log("Deu errado");
+    }
+}
+
+/* async function callFetchWithPosts4(musica){
+    const options = {
+        method : 'POST',
+        mode: 'cors',
+        headers: { //entender isso
+            'Accept' : 'application/json',
+            'content-type' : 'application/json'
+        },
+        body :JSON.stringify({
+            'Music' : musica
+        })//até isso
+    }
+    //await fetch(url, options);
+    await fetch(`${url}${'database'}`, options);
+}
+
+async function callFetchWithPuts4(id, novaMensagem){
+    const options = {
+        method : 'PUT',
+        mode: 'cors',
+        headers: {
+            'Accept' : 'application/json',
+            'content-type' : 'application/json'            
+        }, 
+        body :JSON.stringify({
+            'Music' : novaMensagem
+        })
+    }
+    //await fetch(`${url}${id}`, options);
+    await fetch(`${url}${'database'}${id}`, options);
+}
+
+async function callFetchWithDeletes4(id){
+    const options = {
+        method : 'DELETE',
+        mode: 'cors',
+        headers: {
+            'Accept' : 'application/json',
+            'content-type' : 'application/json' 
+        }
+    }
+    //await fetch(`${url}${id}`, options);
+    await fetch(`${url}${'database'}${id}`, options);
+} */
+/*
+    Formulários
+*/
+
+/* function submitPosts4(){
+    console.log("entrei na função");
+    
+    const form = document.forms['postForms3'];    
+    const mensagem = form["mensagem"].value;
+    callFetchWithPosts3(mensagem);
+    return false; // Evitar o reload da tela.
+}
+
+function submitPuts4(){
+    const form = document.forms['putForms3'];  
+    const id = form["id"].value;  
+    const mensagem = form["mensagem"].value;
+    callFetchWithPuts3(id, mensagem);
+    return false; // Evitar o reload da tela.
+}
+
+function submitDeletes4(){
+    const form = document.forms['deleteForms3'];  
+    const id = form["id"].value;  
+    callFetchWithDeletes3(id);
+    return false; // Evitar o reload da tela.
+} */
+
+function submitGets4(){
+    callFetchWithGets4();
+    return false;
+}
