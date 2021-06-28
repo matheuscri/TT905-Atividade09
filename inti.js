@@ -1,5 +1,5 @@
 // link geral do programa
-let url = "https://tt905-prog-web-matheus-cri.herokuapp.com/"
+let url = "https://tt905-progweb-matheus-cri.herokuapp.com/"
 
 /********************************************************************** 
 *******************************Cantores********************************
