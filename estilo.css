@@ -1,0 +1,181 @@
+h1{
+    color: darkgreen;
+    clear: both;
+    font-family: Courier New,Impact,Arial;
+    text-align: center;
+
+}
+title{
+    color: darkred;
+}
+p.ocup1
+{
+    border: #000 solid;
+    background-color: rgba(79, 79, 223, 0.925);
+    font-family: Courier New,Impact,Arial;
+    font-size: 14px ;
+    clear: both;
+}
+p.mus1
+{
+    text-decoration:wavy;
+    color: purple;
+}
+
+div.menu
+{
+    display: block;
+    float:left ;
+    width: 20%;
+    padding: 10px;
+    border: solid ;
+    background-color:burlywood;
+
+
+}
+div.test1
+{
+    background-color:lightblue;
+    border: solid;
+}
+h2{
+    color: darkgreen;
+    clear: both;
+    
+}
+
+div.menuintegrante
+{
+    border: #000 solid 3px;
+    display: inline-block;
+    width: 360px;
+    height: 400px;
+    padding: 20px;
+}
+h2.ocup1
+{
+    clear: both;
+    text-align: center;
+}  
+div.ocup
+{
+    border: #000 solid 3px;
+    display: inline-block;
+    vertical-align: top;
+    width: 720px;
+    height: 400px;
+    padding: 20px;
+    
+}
+body.bodi
+{
+    background: url('2177f226-edit_elon_musk_starlink_horizontal.jpg');
+    background-attachment: fixed;
+    background-size: 50% 50%;
+    z-index: -1;
+}
+div.diva
+{
+    background-color: white;
+
+}
+h2.lika
+{
+    text-align: center;
+}
+div.diva:hover
+{
+    background-color:gainsboro;
+}
+div.menu:hover
+{
+    background-color: peru;
+}
+
+div.diva:focus
+{
+    background-color: black;
+    color: black;
+}
+
+img.imagfot2:hover
+{
+    transform: scale(5) translate(50px);
+}
+div.ocup:hover
+{
+    background-color:slategray;
+    transition-property: background-color;
+    transition-duration: 3s;
+    transition-delay: 1s;
+}
+div.menuintegrante:hover
+{
+    background-color:slategrey;
+    transition-property: background-color;
+    transition-duration: 3s;
+}
+img.fot1:hover
+{
+    transform: scale(5) translate(50px);
+}
+
+a.ursinho:hover
+{
+    background-color: royalblue;
+    color:aliceblue;
+    transform: scale(2) rotate(360deg);
+   
+
+}
+a:focus
+{
+    background-color: red;
+    color: khaki;
+}
+h1:hover
+{
+    background-color: lawngreen;
+    color: lightcyan;
+}
+h2:hover
+{
+    background: linear-gradient(
+    to bottom right,
+    orange 10%,
+    green 20%,
+    yellow 100%);
+}
+h2.lika:hover
+{
+    background-color: limegreen;
+    color:aliceblue;
+    transform: scale(2) rotate(360deg);
+    transition-duration: 1s;
+    transition-delay: 0.1s;
+    transition-timing-function: initial;
+}
+img.img {
+    width: 45px;
+    height: 45px;
+  }
+  .frame {
+    text-align: center;
+    /*background-image: url(charlie-brown-jr-foto-Jerri-Rossato-Lima-web.jpg);*/
+    background-image: url(unknown.png);
+    /*background-color: tomato;*/
+    height: 700px;
+    width: 700px;
+    background-size:cover;
+    background-position: center;
+  }
+  #frame4 {
+        position: relative;
+        bottom: 15px;
+        text-align: center;
+        color: black;
+        font-size: 20px;
+        height: 25px;
+    width: 700px;
+  }
+  
